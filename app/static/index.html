@@ -28,124 +28,127 @@
             </div>
         </div>
 
-        <!-- Dashboard Charts -->
-        <div class="row mb-4">
-            <div class="col-md-6">
-                <div class="card">
-                    <div class="card-header">
-                        <h6>Top 10 Employee Scores</h6>
+        <!-- Dashboard Section (Hidden by default) -->
+        <div id="dashboardSection" style="display: none;">
+            <!-- Dashboard Charts -->
+            <div class="row mb-4">
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header">
+                            <h6>Top 10 Employee Scores</h6>
+                        </div>
+                        <div class="card-body">
+                            <canvas id="topScoresChart" height="200"></canvas>
+                        </div>
                     </div>
-                    <div class="card-body">
-                        <canvas id="topScoresChart" height="200"></canvas>
+                </div>
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header">
+                            <h6>Metrics Comparison</h6>
+                        </div>
+                        <div class="card-body">
+                            <canvas id="metricsChart" height="200"></canvas>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="col-md-6">
-                <div class="card">
-                    <div class="card-header">
-                        <h6>Metrics Comparison</h6>
-                    </div>
-                    <div class="card-body">
-                        <canvas id="metricsChart" height="200"></canvas>
-                    </div>
-                </div>
-            </div>
-        </div>
 
-        <!-- Performance Distribution -->
-        <div class="row mb-4">
-            <div class="col-md-12">
-                <div class="card">
-                    <div class="card-header">
-                        <h6>Performance Distribution</h6>
-                    </div>
-                    <div class="card-body" style="height: 300px;">
-                        <canvas id="distributionChart"></canvas>
+            <!-- Performance Distribution -->
+            <div class="row mb-4">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h6>Performance Distribution</h6>
+                        </div>
+                        <div class="card-body" style="height: 300px;">
+                            <canvas id="distributionChart"></canvas>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <!-- Scores Display -->
-        <div class="card">
-            <div class="card-header d-flex justify-content-between align-items-center">
-                <h5>Employee Scores</h5>
-                <button class="btn btn-sm btn-outline-primary" onclick="loadScores()" title="Reload Scoreboard">
-                    <i class="fas fa-sync-alt"></i> Reload
-                </button>
-            </div>
-            <div class="card-body">
-                <div class="row mb-3">
-                    <div class="col-md-4">
-                        <input type="date" class="form-control" id="startDate" value="2024-01-01">
-                    </div>
-                    <div class="col-md-4">
-                        <input type="date" class="form-control" id="endDate" value="2024-12-31">
-                    </div>
-                    <div class="col-md-4">
-                        <button class="btn btn-success" onclick="loadScores()">Load Scores</button>
-                    </div>
+            <!-- Scores Display -->
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h5>Employee Scores</h5>
+                    <button class="btn btn-sm btn-outline-primary" onclick="loadScores()" title="Reload Scoreboard">
+                        <i class="fas fa-sync-alt"></i> Reload
+                    </button>
                 </div>
-                
-                <!-- Summary Cards -->
-                <div class="row mb-3">
-                    <div class="col-md-3">
-                        <div class="card bg-primary text-white">
-                            <div class="card-body">
-                                <h6>Total Employees</h6>
-                                <h4 id="totalEmployees">0</h4>
+                <div class="card-body">
+                    <div class="row mb-3">
+                        <div class="col-md-4">
+                            <input type="date" class="form-control" id="startDate" value="2024-01-01">
+                        </div>
+                        <div class="col-md-4">
+                            <input type="date" class="form-control" id="endDate" value="2024-12-31">
+                        </div>
+                        <div class="col-md-4">
+                            <button class="btn btn-success" onclick="loadScores()">Load Scores</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Summary Cards -->
+                    <div class="row mb-3">
+                        <div class="col-md-3">
+                            <div class="card bg-primary text-white">
+                                <div class="card-body">
+                                    <h6>Total Employees</h6>
+                                    <h4 id="totalEmployees">0</h4>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card bg-success text-white">
+                                <div class="card-body">
+                                    <h6>Average Score</h6>
+                                    <h4 id="avgScore">0</h4>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card bg-warning text-white">
+                                <div class="card-body">
+                                    <h6>Top Performer</h6>
+                                    <h4 id="topPerformer">-</h4>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card bg-info text-white">
+                                <div class="card-body">
+                                    <h6>Needs Improvement</h6>
+                                    <h4 id="needsImprovement">0</h4>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-3">
-                        <div class="card bg-success text-white">
-                            <div class="card-body">
-                                <h6>Average Score</h6>
-                                <h4 id="avgScore">0</h4>
-                            </div>
-                        </div>
+                    
+                    <!-- Suggestions Panel -->
+                    <div class="alert alert-info" id="suggestionsPanel" style="display: none;">
+                        <h6><i class="fas fa-lightbulb"></i> Performance Suggestions</h6>
+                        <div id="suggestionsList"></div>
                     </div>
-                    <div class="col-md-3">
-                        <div class="card bg-warning text-white">
-                            <div class="card-body">
-                                <h6>Top Performer</h6>
-                                <h4 id="topPerformer">-</h4>
-                            </div>
-                        </div>
+                    
+                    <div class="table-responsive">
+                        <table class="table table-striped" id="scoresTable">
+                            <thead>
+                                <tr>
+                                    <th>Rank</th>
+                                    <th>Employee ID</th>
+                                    <th>Name</th>
+                                    <th>Total Score</th>
+                                    <th>Productivity</th>
+                                    <th>Quality</th>
+                                    <th>Fuel Efficiency</th>
+                                    <th>Attendance</th>
+                                </tr>
+                            </thead>
+                            <tbody id="scoresBody">
+                            </tbody>
+                        </table>
                     </div>
-                    <div class="col-md-3">
-                        <div class="card bg-info text-white">
-                            <div class="card-body">
-                                <h6>Needs Improvement</h6>
-                                <h4 id="needsImprovement">0</h4>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Suggestions Panel -->
-                <div class="alert alert-info" id="suggestionsPanel" style="display: none;">
-                    <h6><i class="fas fa-lightbulb"></i> Performance Suggestions</h6>
-                    <div id="suggestionsList"></div>
-                </div>
-                
-                <div class="table-responsive">
-                    <table class="table table-striped" id="scoresTable">
-                        <thead>
-                            <tr>
-                                <th>Rank</th>
-                                <th>Employee ID</th>
-                                <th>Name</th>
-                                <th>Total Score</th>
-                                <th>Productivity</th>
-                                <th>Quality</th>
-                                <th>Fuel Efficiency</th>
-                                <th>Attendance</th>
-                            </tr>
-                        </thead>
-                        <tbody id="scoresBody">
-                        </tbody>
-                    </table>
                 </div>
             </div>
         </div>
@@ -171,6 +174,10 @@
                 if (response.ok) {
                     document.getElementById('uploadResult').innerHTML = 
                         `<div class="alert alert-success">${result.message}</div>`;
+                    
+                    // Show dashboard after successful upload
+                    document.getElementById('dashboardSection').style.display = 'block';
+                    loadScores();
                 } else {
                     document.getElementById('uploadResult').innerHTML = 
                         `<div class="alert alert-danger">Error: ${result.detail}</div>`;
@@ -192,10 +199,13 @@
                 const response = await fetch(`/scores?start=${startDate}&end=${endDate}`);
                 const scores = await response.json();
                 
-                updateTable(scores);
-                updateSummaryCards(scores);
-                updateCharts(scores);
-                loadSuggestions(startDate, endDate);
+                if (scores.length > 0) {
+                    document.getElementById('dashboardSection').style.display = 'block';
+                    updateTable(scores);
+                    updateSummaryCards(scores);
+                    updateCharts(scores);
+                    loadSuggestions(startDate, endDate);
+                }
             } catch (error) {
                 alert('Error loading scores: ' + error.message);
             }
@@ -397,9 +407,6 @@
                 console.error('Error loading suggestions:', error);
             }
         }
-
-        // Load scores on page load
-        window.onload = () => loadScores();
     </script>
 </body>
 </html>
