@@ -1,4 +1,4 @@
-from fastapi import APIRouter, UploadFile, File, HTTPException
+from fastapi import APIRouter, UploadFile, File, HTTPException, Form
 from app.database import get_db
 from app.schemas import CSVUploadResponse
 import csv
@@ -57,7 +57,7 @@ def parse_csv_content(content: str) -> list:
     return rows
 
 @router.post("/upload-csv", response_model=CSVUploadResponse)
-async def upload_csv(file: UploadFile = File(...)):
+async def upload_csv(file: UploadFile = File(...), clear_data: bool = Form(True)):
     if not file.filename.endswith('.csv'):
         raise HTTPException(status_code=400, detail="File must be CSV format")
     
@@ -69,6 +69,11 @@ async def upload_csv(file: UploadFile = File(...)):
         
         with get_db() as conn:
             cursor = conn.cursor()
+            
+            # Clear existing data if requested
+            if clear_data:
+                cursor.execute("DELETE FROM events")
+                cursor.execute("DELETE FROM employees")
             
             # Process each row and create employees if needed
             for row in rows:
